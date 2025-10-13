@@ -1,43 +1,43 @@
 ## SocialApp API
 
-Backend case kapsamında geliştirdiğim örnek bir sosyal medya RESTful API'sidir.
-Uygulamayı yalnızca API seviyesinde geliştirdim, arayüzü bulunmamaktadır. 
+Backend case kapsamında geliştirdiğim örnek bir sosyal medya RESTful API'sidir.<br>
+Uygulamayı yalnızca API seviyesinde geliştirdim, arayüzü bulunmamaktadır.
 
 ## KULLANILAN TEKNOLOJİLER VE KÜTÜPHANELER(DEPENDENCIES)
 
--Spring Initializer üzerinden gerekli konfigürasyonlar yapıldı ve proje oluşturuldu.
--Java 21
--Spring Boot 3.5.6
--Intellij IDE Community Version
--Maven
--PostgreSQL
--JsonWebToken(api,impl,jackson)
--Dotenv
--Bcrypt
--ModelMapper
--Lombok
--Spring Boot Devtools
--Spring Boot Starter WEB
--Spring Boot Starter JPA
--POSTMAN (API testleri için)
+-Spring Initializer üzerinden gerekli konfigürasyonlar yapıldı ve proje oluşturuldu.<br>
+-Java 21<br>
+-Spring Boot 3.5.6<br>
+-Intellij IDE Community Version<br>
+-Maven<br>
+-PostgreSQL<br>
+-JsonWebToken(api,impl,jackson)<br>
+-Dotenv<br>
+-Bcrypt<br>
+-ModelMapper<br>
+-Lombok<br>
+-Spring Boot Devtools<br>
+-Spring Boot Starter WEB<br>
+-Spring Boot Starter JPA<br>
+-POSTMAN (API testleri için)<br>
 
 
 ## KURULUM & ÇALIŞTIRMA ADIMLARI
 
-1- git clone https://github.com/EkremL/socialapp-api.git adresi üzerinden proje klonlanır.
-2- Intellij IDE üzerinden açılır ve dependencyler otomatik yüklenecektir.
-3-.env dosyası oluşturulur ve aşağıdaki formatta değişken oluşturulur.
-SECRET_KEY=your_256_bit_secret_key_here
-4- Veritabanı yapılandırması (application.properties) için aşağıdaki şekilde yapılmalıdır.
-spring.application.name=SocialApp
-server.port=8000
-spring.datasource.url=jdbc:postgresql://localhost:5432/socialapp
-spring.datasource.username=postgres
-spring.datasource.password=yourPW
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-5- Projeyi ya terminal üzerinden mvn spring-boot:run komutuyla ya da main class üzerinden run ederek çalıştırılır.
+1- git clone https://github.com/EkremL/socialapp-api.git adresi üzerinden proje klonlanır.<br>
+2- Intellij IDE üzerinden açılır ve dependencyler otomatik yüklenecektir.<br>
+3-.env dosyası oluşturulur ve aşağıdaki formatta değişken oluşturulur.<br>
+SECRET_KEY=your_256_bit_secret_key_here<br>
+4- Veritabanı yapılandırması (application.properties) için aşağıdaki şekilde yapılmalıdır.<br>
+spring.application.name=SocialApp<br>
+server.port=8000<br>
+spring.datasource.url=jdbc:postgresql://localhost:5432/socialapp<br>
+spring.datasource.username=postgres<br>
+spring.datasource.password=yourPW<br>
+spring.datasource.driver-class-name=org.postgresql.Driver<br>
+spring.jpa.hibernate.ddl-auto=update<br>
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect<br>
+5- Projeyi ya terminal üzerinden mvn spring-boot:run komutuyla ya da main class üzerinden run ederek çalıştırılır.<br>
 
 ##HAZIR (VARSAYILAN) ADMIN KULLANICISI OLUŞTURMA BİLGİSİ
 
