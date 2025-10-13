@@ -41,13 +41,13 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect<
 
 ## HAZIR (VARSAYILAN) ADMIN KULLANICISI OLUŞTURMA BİLGİSİ
 
-Proje ayağa kaldırıldığında AdminInitializer yardımcı sınıfı aracılığıyla bir admin oluşturulur.
-Admin bilgileri statik data olarak bu classın içinde mevcuttur fakat bilgilendirme açısından; şu bilgilerle oluşturuluyor:
+Proje ayağa kaldırıldığında AdminInitializer yardımcı sınıfı aracılığıyla bir admin oluşturulur.<br>
+Admin bilgileri statik data olarak bu classın içinde mevcuttur fakat bilgilendirme açısından; şu bilgilerle oluşturuluyor:<br>
 
-username: admin
-email:admin@admin.com
-password: Admin123*
-role: ADMIN
+username: admin<br>
+email:admin@admin.com<br>
+password: Admin123*<br>
+role: ADMIN<br>
 
 ## ENDPOINTLER (UÇ NOKTALAR)
 
