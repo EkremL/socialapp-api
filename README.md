@@ -62,12 +62,12 @@ ENDPOINTLER (UÇ NOKTALAR)
 ####POSTS
 | HTTP     | ENDPOINT                  | AÇIKLAMA|
 |---------|--------------------------|
-| POST     | /api/posts                | Yeni post oluşturulur.|
-| GET     | /api/posts/{id}            | Tekli postu idsine göre getirir.|
-| GET     | /api/posts                 | Tüm postları döner.|
-| PUT     | /api/posts/{id}            | Post güncellenir. (post sahibi veya admin tarafından)|
-| DELETE    | /api/posts/{id}          | İlgili post, idsine göre silinir.  (post sahibi veya admin tarafından)|
-| POST     | /api/posts/{id}/view      | Görüntülenme sayısı artar.|
+| POST     | /api/posts                | Yeni post oluşturulur. |
+| GET     | /api/posts/{id}            | Tekli postu idsine göre getirir. |
+| GET     | /api/posts                 | Tüm postları döner. |
+| PUT     | /api/posts/{id}            | Post güncellenir. (post sahibi veya admin tarafından) |
+| DELETE    | /api/posts/{id}          | İlgili post, idsine göre silinir.  (post sahibi veya admin tarafından) |
+| POST     | /api/posts/{id}/view      | Görüntülenme sayısı artar. |
 
 ####COMMENTS
 | HTTP     | ENDPOINT                   |AÇIKLAMA |
