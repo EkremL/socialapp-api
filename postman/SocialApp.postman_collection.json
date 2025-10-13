@@ -85,7 +85,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImVrcmVtMiIsImlhdCI6MTc2MDE5ODk3NSwiZXhwIjoxNzYyNzkwOTc1fQ.99ABWlKcT2XWzez2ATsn7YeDiTrDqoGsyvJpPS5fkOA",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -126,7 +126,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImVrcmVtIiwiaWF0IjoxNzYwMjEzMzY1LCJleHAiOjE3NjI4MDUzNjV9.sboi632I227nFb8mlbFc0Og_QNyHqJbneCYOu1sk-Gw",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -160,7 +160,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3QiLCJpYXQiOjE3NjAyMTY2NjcsImV4cCI6MTc2MjgwODY2N30.wJXb1PAXXqL0eD4BFGw055f9VQDWeW80tM6zp57vqJU",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -219,7 +219,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImVrcmVtMiIsImlhdCI6MTc2MDI4OTA4MSwiZXhwIjoxNzYyODgxMDgxfQ.hVbjw8qdMjyWYI7UM3yJ26x8uq4m70r4M_9Y4xmGz00",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -251,7 +251,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImVrcmVtMiIsImlhdCI6MTc2MDI4OTA4MSwiZXhwIjoxNzYyODgxMDgxfQ.hVbjw8qdMjyWYI7UM3yJ26x8uq4m70r4M_9Y4xmGz00",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -275,7 +275,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImVrcmVtMiIsImlhdCI6MTc2MDI4OTA4MSwiZXhwIjoxNzYyODgxMDgxfQ.hVbjw8qdMjyWYI7UM3yJ26x8uq4m70r4M_9Y4xmGz00",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -298,7 +298,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImVrcmVtMiIsImlhdCI6MTc2MDI4OTA4MSwiZXhwIjoxNzYyODgxMDgxfQ.hVbjw8qdMjyWYI7UM3yJ26x8uq4m70r4M_9Y4xmGz00",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -331,7 +331,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImVrcmVtMiIsImlhdCI6MTc2MDI4OTA4MSwiZXhwIjoxNzYyODgxMDgxfQ.hVbjw8qdMjyWYI7UM3yJ26x8uq4m70r4M_9Y4xmGz00",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -387,7 +387,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3QyIiwiaWF0IjoxNzYwMzAyNTg4LCJleHAiOjE3NjI4OTQ1ODh9.y8aiR4pSiykOWeDQs259Q1hMr226fFempqGEX7WTx7c",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -424,7 +424,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3QiLCJpYXQiOjE3NjAyOTk2ODUsImV4cCI6MTc2Mjg5MTY4NX0.kJT4nMxjfMFkLd0mCNJzWATsVpIqelYVUu-7a_6MnBM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -458,7 +458,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3QiLCJpYXQiOjE3NjAyOTk2ODUsImV4cCI6MTc2Mjg5MTY4NX0.kJT4nMxjfMFkLd0mCNJzWATsVpIqelYVUu-7a_6MnBM",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -496,7 +496,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3QiLCJpYXQiOjE3NjAzMDI3NTQsImV4cCI6MTc2Mjg5NDc1NH0.87oAYevf8e9esO60kmJGuq3xRoSQ71DSwFaAFaGcrFs",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -521,7 +521,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3QiLCJpYXQiOjE3NjAzMDI3NTQsImV4cCI6MTc2Mjg5NDc1NH0.87oAYevf8e9esO60kmJGuq3xRoSQ71DSwFaAFaGcrFs",
+								"value": "{{accessToken}}",
 								"type": "text"
 							}
 						],
@@ -569,7 +569,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": ""
+			"value": "http://localhost:8000/api"
 		}
 	]
 }
