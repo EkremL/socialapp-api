@@ -39,7 +39,7 @@ spring.jpa.hibernate.ddl-auto=update<br>
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect<br>
 5- Projeyi ya terminal üzerinden mvn spring-boot:run komutuyla ya da main class üzerinden run ederek çalıştırılır.<br>
 
-##HAZIR (VARSAYILAN) ADMIN KULLANICISI OLUŞTURMA BİLGİSİ
+## HAZIR (VARSAYILAN) ADMIN KULLANICISI OLUŞTURMA BİLGİSİ
 
 Proje ayağa kaldırıldığında AdminInitializer yardımcı sınıfı aracılığıyla bir admin oluşturulur.
 Admin bilgileri statik data olarak bu classın içinde mevcuttur fakat bilgilendirme açısından; şu bilgilerle oluşturuluyor:
@@ -49,7 +49,7 @@ email:admin@admin.com
 password: Admin123*
 role: ADMIN
 
-###ENDPOINTLER (UÇ NOKTALAR)
+## ENDPOINTLER (UÇ NOKTALAR)
 
 #### AUTH
 
@@ -95,27 +95,27 @@ role: ADMIN
 
 
 ##POSTMAN COLLECTION
-- Tüm endpointler Postman üzerinden test edilmiştir.
-- Koleksiyon içerisinde aşağıdaki akış takip edilmelidir:
+- Tüm endpointler Postman üzerinden test edilmiştir.<br>
+- Koleksiyon içerisinde aşağıdaki akış takip edilmelidir:<br>
 
   signup -> login -> JWT Token ile role based işlemler -> logout
 
 #Ortam Değişkenleri
-{{url}} = http://localhost:8000/api   (port numarasını application.properties üzerinden 8000 verdim, ayrıca postmanda test ederken tekrar tekrar yazmamak adına /api yi de baseurl'e dahil ettim. Tercihe bağlı /api kısmı çıkartılabilir)
+{{url}} = http://localhost:8000/api   (port numarasını application.properties üzerinden 8000 verdim, ayrıca postmanda test ederken tekrar tekrar yazmamak adına /api yi de baseurl'e dahil ettim. Tercihe bağlı /api kısmı çıkartılabilir)<br>
 {{accessToken}} = Bearer <jwt_token>  (Not. Test sürecinde token'i Postman Headers bölümünden Authorization'u aktif ederek elle (manual) şekilde Bearer <token> olarak ekledim. Tercihe bağlı olarak accesToken değişkeni de tanımlanabilir.)
 
 
 ##Varsayımlar & Kısıtlar
--Projede Spring Security kullanmadım. Dolayısıyla signature ve hashleme işlemlerini manual yaptım.
--İşlevsel Gereksinimlerde belirtildiği üzere login ile token üretilir ve veritabanında aktif olarak kaydedilir, logout ile sonlandırılır.
--Her korumalı (authorization) endpoint çağrısında token kontrolü yapılmaktadır.
--Token geçerlilik süresini 30 gün yaptım çünkü test edilirken sorun yaşanmaması adına böyle bir tercihte bulundum. Ayrıca bu değeri Constants classında tanımladım.
--256 bitlik Jwt secret keyi dotenv içerisinde tanımladım ve veri güvenliğini sağladım.
--Hata yönetimi açısından global exception handler eklemek yerine hataları manual bir şekilde ele aldım. (Bu bilinçli bir tercih, dilenirse eklenebilir.)
--Tüm endpointleri başarıyla test ettim ve başarılı sonuçlar aldım.
+-Projede Spring Security kullanmadım. Dolayısıyla signature ve hashleme işlemlerini manual yaptım.<br>
+-İşlevsel Gereksinimlerde belirtildiği üzere login ile token üretilir ve veritabanında aktif olarak kaydedilir, logout ile sonlandırılır.<br>
+-Her korumalı (authorization) endpoint çağrısında token kontrolü yapılmaktadır.<br>
+-Token geçerlilik süresini 30 gün yaptım çünkü test edilirken sorun yaşanmaması adına böyle bir tercihte bulundum. Ayrıca bu değeri Constants classında tanımladım.<br>
+-256 bitlik Jwt secret keyi dotenv içerisinde tanımladım ve veri güvenliğini sağladım.<br>
+-Hata yönetimi açısından global exception handler eklemek yerine hataları manual bir şekilde ele aldım. (Bu bilinçli bir tercih, dilenirse eklenebilir.)<br>
+-Tüm endpointleri başarıyla test ettim ve başarılı sonuçlar aldım.<br>
 -Nested mapper gereken yerlerde gerekli kısımları ModelMapper ile, diğer kısımları ise manual bir şekilde mapledim.
 
 ##Projeyi Geliştirme Adımları
--Proje boyunca katmanlı mimari (Model Repository Controller Service) tercih ederek temiz kod prensiplerine ve SoC prensibine sadık kalmaya çalıştım.
--Sırasıyla User, Auth, Admin, Posts , Comments ve Like bölümlerini geliştirdim. İlişkilendirmeleri sonradan ekledim. (One to Many, Many to One gibi)
+-Proje boyunca katmanlı mimari (Model Repository Controller Service) tercih ederek temiz kod prensiplerine ve SoC prensibine sadık kalmaya çalıştım.<br>
+-Sırasıyla User, Auth, Admin, Posts , Comments ve Like bölümlerini geliştirdim. İlişkilendirmeleri sonradan ekledim. (One to Many, Many to One gibi)<br>
 -Bazı dto ları sonradan ekleyerek temiz kod prensibini benimsedim.
