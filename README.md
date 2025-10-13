@@ -49,40 +49,7 @@ email:admin@admin.com
 password: Admin123*
 role: ADMIN
 
-ENDPOINTLER (UÇ NOKTALAR)
-
-####AUTH
-| HTTP     | ENDPOINT                  | AÇIKLAMA |
-|---------|--------------------------|
-| POST     | /api/auth/signup          | Yeni kullanıcı kaydedilir ve varsayılan olarak rolü USER olarak atanır. |
-| POST     | /api/auth/login           | Giriş yapılır, JWT token üretilir ve bu token databaseye kaydedilir. |
-| POST     | /api/auth/logout          | Kullanıcı çıkış yapar ve token geçersiz kılınır. |
-| POST     | /api/auth/me              | Aktif kullanıcının bilgilerini döner. |
-
-####POSTS
-| HTTP     | ENDPOINT                  | AÇIKLAMA|
-|---------|--------------------------|
-| POST     | /api/posts                | Yeni post oluşturulur. |
-| GET     | /api/posts/{id}            | Tekli postu idsine göre getirir. |
-| GET     | /api/posts                 | Tüm postları döner. |
-| PUT     | /api/posts/{id}            | Post güncellenir. (post sahibi veya admin tarafından) |
-| DELETE    | /api/posts/{id}          | İlgili post, idsine göre silinir.  (post sahibi veya admin tarafından) |
-| POST     | /api/posts/{id}/view      | Görüntülenme sayısı artar. |
-
-####COMMENTS
-| HTTP     | ENDPOINT                   |AÇIKLAMA |
-|---------|--------------------------|
-| POST     | /api/posts/{id}/comments     | İlgili posta yorum ekleme işlemini yapar. |
-| GET      | /api/posts/{id}/comments     | İlgili postun içindeki tüm yorumlar listelenir. |
-| DELETE   | /api/comments/{id}           | Yorumu siler. (Yorum sahibi, post sahibi veya admin tarafından. Not: Post silinirse yorumlar da silinir!) |
-
-####LIKES
-| HTTP     | ENDPOINT                  | AÇIKLAMA |
-|---------|--------------------------|
-| POST     | /api/posts/{id}/likes        | Post beğenme işlemi. |
-| DELETE   | /api/posts/{id}/likes        | Beğeniyi geri çekme işlemi. |
-
-### ENDPOINTLER (UÇ NOKTALAR)
+###ENDPOINTLER (UÇ NOKTALAR)
 
 #### AUTH
 
@@ -124,6 +91,7 @@ ENDPOINTLER (UÇ NOKTALAR)
 |------|-----------|-----------|
 | POST | /api/posts/{id}/likes | Post beğenme işlemi. |
 | DELETE | /api/posts/{id}/likes | Beğeniyi geri çekme işlemi. |
+
 
 
 ##POSTMAN COLLECTION
