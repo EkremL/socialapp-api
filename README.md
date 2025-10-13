@@ -94,18 +94,18 @@ role: ADMIN<br>
 
 
 
-##POSTMAN COLLECTION
+## POSTMAN COLLECTION
 - Tüm endpointler Postman üzerinden test edilmiştir.<br>
 - Koleksiyon içerisinde aşağıdaki akış takip edilmelidir:<br>
 
   signup -> login -> JWT Token ile role based işlemler -> logout
 
-#Ortam Değişkenleri
+## Ortam Değişkenleri
 {{url}} = http://localhost:8000/api   (port numarasını application.properties üzerinden 8000 verdim, ayrıca postmanda test ederken tekrar tekrar yazmamak adına /api yi de baseurl'e dahil ettim. Tercihe bağlı /api kısmı çıkartılabilir)<br>
 {{accessToken}} = Bearer <jwt_token>  (Not. Test sürecinde token'i Postman Headers bölümünden Authorization'u aktif ederek elle (manual) şekilde Bearer <token> olarak ekledim. Tercihe bağlı olarak accesToken değişkeni de tanımlanabilir.)
 
 
-##Varsayımlar & Kısıtlar
+## Varsayımlar & Kısıtlar
 -Projede Spring Security kullanmadım. Dolayısıyla signature ve hashleme işlemlerini manual yaptım.<br>
 -İşlevsel Gereksinimlerde belirtildiği üzere login ile token üretilir ve veritabanında aktif olarak kaydedilir, logout ile sonlandırılır.<br>
 -Her korumalı (authorization) endpoint çağrısında token kontrolü yapılmaktadır.<br>
@@ -115,7 +115,7 @@ role: ADMIN<br>
 -Tüm endpointleri başarıyla test ettim ve başarılı sonuçlar aldım.<br>
 -Nested mapper gereken yerlerde gerekli kısımları ModelMapper ile, diğer kısımları ise manual bir şekilde mapledim.
 
-##Projeyi Geliştirme Adımları
+## Projeyi Geliştirme Adımları
 -Proje boyunca katmanlı mimari (Model Repository Controller Service) tercih ederek temiz kod prensiplerine ve SoC prensibine sadık kalmaya çalıştım.<br>
 -Sırasıyla User, Auth, Admin, Posts , Comments ve Like bölümlerini geliştirdim. İlişkilendirmeleri sonradan ekledim. (One to Many, Many to One gibi)<br>
 -Bazı dto ları sonradan ekleyerek temiz kod prensibini benimsedim.
