@@ -39,6 +39,8 @@ spring.jpa.hibernate.ddl-auto=update<br>
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect<br>
 5- Projeyi ya terminal üzerinden mvn spring-boot:run komutuyla ya da main class üzerinden run ederek çalıştırılır.<br>
 
+NOT: Postman collection ve environment dosyaları "postman" klasöründedir. Test için login işlemi yaptıktan sonra kendi "accesToken"'inizi environment kısmında tanımlayabilirsiniz. (Bearer <alacağınız_token>)  
+
 ## HAZIR (VARSAYILAN) ADMIN KULLANICISI OLUŞTURMA BİLGİSİ
 
 Proje ayağa kaldırıldığında AdminInitializer yardımcı sınıfı aracılığıyla bir admin oluşturulur.<br>
