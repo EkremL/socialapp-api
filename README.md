@@ -82,6 +82,49 @@ ENDPOINTLER (UÇ NOKTALAR)
 | POST     | /api/posts/{id}/likes        | Post beğenme işlemi. |
 | DELETE   | /api/posts/{id}/likes        | Beğeniyi geri çekme işlemi. |
 
+### ENDPOINTLER (UÇ NOKTALAR)
+
+#### AUTH
+
+| HTTP | Endpoint | Açıklama |
+|------|-----------|-----------|
+| POST | /api/auth/signup | Yeni kullanıcı kaydedilir ve varsayılan olarak rolü USER olarak atanır. |
+| POST | /api/auth/login | Giriş yapılır, JWT token üretilir ve bu token database'e kaydedilir. |
+| POST | /api/auth/logout | Kullanıcı çıkış yapar ve token geçersiz kılınır. |
+| GET  | /api/auth/me | Aktif kullanıcının bilgilerini döner. |
+
+---
+
+#### POSTS
+
+| HTTP | Endpoint | Açıklama |
+|------|-----------|-----------|
+| POST | /api/posts | Yeni post oluşturulur. |
+| GET  | /api/posts/{id} | Tekli post id'sine göre getirilir. |
+| GET  | /api/posts | Tüm postlar döner. |
+| PUT  | /api/posts/{id} | Post güncellenir. (post sahibi veya admin tarafından) |
+| DELETE | /api/posts/{id} | İlgili post silinir. (post sahibi veya admin tarafından) |
+| POST | /api/posts/{id}/view | Görüntülenme sayısı artar. |
+
+---
+
+#### COMMENTS
+
+| HTTP | Endpoint | Açıklama |
+|------|-----------|-----------|
+| POST | /api/posts/{id}/comments | İlgili posta yorum ekleme işlemini yapar. |
+| GET  | /api/posts/{id}/comments | İlgili postun içindeki tüm yorumları listeler. |
+| DELETE | /api/comments/{id} | Yorumu siler. (Yorum sahibi, post sahibi veya admin tarafından. Not: Post silinirse yorumlar da silinir.) |
+
+---
+
+#### LIKES
+
+| HTTP | Endpoint | Açıklama |
+|------|-----------|-----------|
+| POST | /api/posts/{id}/likes | Post beğenme işlemi. |
+| DELETE | /api/posts/{id}/likes | Beğeniyi geri çekme işlemi. |
+
 
 ##POSTMAN COLLECTION
 - Tüm endpointler Postman üzerinden test edilmiştir.
