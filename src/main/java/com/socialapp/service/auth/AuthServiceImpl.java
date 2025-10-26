@@ -79,6 +79,7 @@ public class AuthServiceImpl implements AuthService {
         Token token = new Token();
         token.setToken(jwt);
         token.setUser(user);
+        token.setUsername(user.getUsername());
         token.setExpired(false);
         token.setRevoked(false);
         tokenRepository.save(token);
