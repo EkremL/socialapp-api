@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto getUserById(Long id, String authHeader){
         //?Token üzerinden mevcut kullanıcıyı aldım.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
-        //?Hedef Id yi (silinmek istenen kişi) databaseden buluyorum.
+        //?Hedef Id yi (çağrılmak istenen kişi) databaseden buluyorum.
         User targetUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found!")
                 );
@@ -48,8 +48,12 @@ public class UserServiceImpl implements UserService {
         if(!result.verified)
             throw new RuntimeException("Passwords are not matching!");
 
+        if(pwDto.getNewPassword().equals(pwDto.getCurrentPassword()))
+            throw new RuntimeException("New password cannot be same with old password!");
+
         //!Yeni şifreyi hashlayıp dbye kaydediyorum.
         String newHashedPw = BCrypt.withDefaults().hashToString(12,pwDto.getNewPassword().toCharArray());
+
 
         user.setPassword(newHashedPw);
         userRepository.save(user);

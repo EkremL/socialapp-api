@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    private final CurrentUserProvider currentUserProvider;
-    private final ModelMapper modelMapper;
 
     //!Sırasıyla register, login , logout ve me endpointleri ile belirtilen bütün auth endpointlerini oluşturdum ve katmanlı mimariden ötürü business-logic'i authService dosyasında oluşturdum.
 

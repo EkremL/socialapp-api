@@ -54,4 +54,9 @@ public class User {
     //?Kullanıcı birden fazla yorum yapabilir, yorumlar silinince postları etkilemez.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
+    //? Kullanıcı birden fazla posta like atabilir.
+    //? Post silinince like'lar da silinir. Comment ile şimdilik ilişkisi yok.
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikePost> likes = new ArrayList<>();
 }

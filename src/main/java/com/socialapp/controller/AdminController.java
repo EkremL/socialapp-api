@@ -17,18 +17,13 @@ public class AdminController {
     //!Case'de belirtilen; adminin useri silebilmesi için gerekli endpointi bu controllerde tanımladım, business logic kısmı ise adminService dosyasında mevcut.
     //!Ayrıca authorization için currenUserProvider (util klasöründe) kullanarak mevcut kullanıcının admin mi user mi olduğunu kontrol edilmesini sağladım.
     private  final AdminService adminService;
-    private  final CurrentUserProvider currentUserProvider;
+
 
     //!Delete user
     @DeleteMapping("/users/{id}")
     public ResponseEntity<String> deleteUserByAdmin(@PathVariable Long id, @RequestHeader("Authorization") String authHeader){
 
-        User currentUser = currentUserProvider.getCurrentUser(authHeader);
-
-        if(!currentUserProvider.isAdmin(currentUser))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete anyone!");
-
-        adminService.deleteUserByAdmin(id);
+        adminService.deleteUserByAdmin(id, authHeader);
         return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully!");
     }
 }

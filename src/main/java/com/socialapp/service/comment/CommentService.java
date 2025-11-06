@@ -10,7 +10,7 @@ public interface CommentService {
     CommentResponseDto addComment(String authHeader, Long postId, CommentCreateDto commentCreateDto);
 
     //!Belirli postun altındaki bütün yorumları fetch ederek listeledim.
-    List<CommentResponseDto> listAllCommentsInPost(Long postId);
+    List<CommentResponseDto> listAllCommentsInPost(Long postId,String authHeader);
 
     //!Yorum silme işlemi (authHeader sayesinde korumalı endpoint haline geldi yani yorum sahibi, post sahibi veya admin tarafından yapılabilir.)
     void deleteComment(String authHeader, Long commentId);

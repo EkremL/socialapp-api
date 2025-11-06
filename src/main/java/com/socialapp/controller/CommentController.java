@@ -27,9 +27,8 @@ public class CommentController {
     }
     //!Get all comments in the post
     @GetMapping("/posts/{id}/comments")
-    public ResponseEntity<List<CommentResponseDto>> listAllCommentsInPost(@PathVariable Long id){
-        List<CommentResponseDto> comments = commentService.listAllCommentsInPost(id);
-        //?Burdaki id postun id sine karşılık geliyor.Bu get endpointinde postun içindeki bütün commentlerin listelenmesini sağladım.
+    public ResponseEntity<List<CommentResponseDto>> listAllCommentsInPost(@PathVariable Long id,  @RequestHeader("Authorization") String authHeader){
+        List<CommentResponseDto> comments = commentService.listAllCommentsInPost(id,authHeader);
         return ResponseEntity.ok(comments);
     }
     //!Delete comment

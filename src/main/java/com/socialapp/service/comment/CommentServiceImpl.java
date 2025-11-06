@@ -54,20 +54,14 @@ public class CommentServiceImpl implements CommentService {
     }
     //! Postun içerisindeki tüm yorumları listeleme işlemi
     @Override
-    public List<CommentResponseDto> listAllCommentsInPost(Long postId){
+    public List<CommentResponseDto> listAllCommentsInPost(Long postId,String authHeader){
         //!Tüm commentleri veritabanından çekiyorum.
-        List<Comment> comments = commentRepository.findByPostId(postId);
+        if (authHeader == null || authHeader.isBlank() || !authHeader.startsWith("Bearer "))
+            throw new RuntimeException("Login required");
 
-        //!Her comment entitysini CommentResponseDto'ya dönüştürüp yeni listeye ekliyorum ve DTO listesi olarak dönüyorum.
-        List<CommentResponseDto> commentDtos = new ArrayList<>();
-        for (Comment comment: comments){
-            CommentResponseDto commentResponseDto = newDto(comment);
-            commentDtos.add(commentResponseDto);
-        }
-
-        return commentDtos;
+        User currentUser = currentUserProvider.getCurrentUser(authHeader);
+        return  commentRepository.findByPostId(postId).stream().map(this::newDto).toList();
     }
-
     //!Yorum silme işlemi
     @Override
     public void deleteComment(String authHeader, Long commentId){

@@ -23,7 +23,7 @@ public class Post {
     @Column(nullable = false)
     private String imageUrl;
 
-    @Column(length = 2500)
+    @Column(length = 2500, nullable = false)
     private String description;
 
     private int viewCount = 0;

@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +31,6 @@ public class PostServiceImpl implements PostService {
     }
     //!Post entitysini postresponsedto'ya dönüştüren sub method
     private PostResponseDto newDto(Post post){
-//        PostResponseDto dto = new PostResponseDto();
-//        dto.setId(post.getId());
-//        dto.setImageUrl(post.getImageUrl());
-//        dto.setDescription(post.getDescription());
-//        dto.setViewCount(post.getViewCount());
-//        dto.setLikeCount(post.getLikeCount());
     //! Manual mappingin bir kısmını modelmapper ile otomatiğe çevirdim, nested user ve comment list'i manual set ettim.
         PostResponseDto dto = modelMapper.map(post, PostResponseDto.class);
 
@@ -78,17 +73,9 @@ public class PostServiceImpl implements PostService {
     //!Tüm postları listeleme
     @Override
     public List<PostResponseDto> getAllPosts(){
-        //!Tüm postları veritabanından çekiyorum.
-        List<Post> posts = postRepository.findAll();
-
-        //!Her post entitysini CommentResponseDto'ya dönüştürüp yeni listeye ekliyorum ve DTO listesi olarak dönüyorum.
-        List<PostResponseDto> postDtos = new ArrayList<>();
-        for (Post post: posts){
-            PostResponseDto postResponseDto = newDto(post);
-            postDtos.add(postResponseDto);
-        }
-
-        return postDtos;
+        return postRepository.findAll().stream().map(this::newDto).toList();
+        //.map(post -> newDto(post)) da olurdu
+        //collect(Collectors.toList()) de olurdu ama yeni javalarda (16+) toList yeterli
     }
     //!Post güncelleme işlemi
     @Override
