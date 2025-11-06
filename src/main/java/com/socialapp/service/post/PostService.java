@@ -11,9 +11,9 @@ public interface PostService {
     //!Post oluşturma (user token ve post oluşturma veri modeli ile)
     PostResponseDto createPost(String authHeader, PostCreateDto postCreateDto);
     //! PostId ye göre tekli post fetch işlemi
-    PostResponseDto getPostById(Long id);
+    PostResponseDto getPostById(Long id, String authHeader);
     //! Tüm postları listeleme
-    List<PostResponseDto> getAllPosts();
+    List<PostResponseDto> getAllPosts(String authHeader);
     //! Post güncelleme (yalnızca post sahibi veya admin tarafından)
     PostResponseDto updatePost(String authHeader, PostUpdateDto postUpdateDto, Long id);
     //! Postu silme (yalnızca post sahibi veya admin tarafından)

@@ -31,17 +31,17 @@ public class PostController {
     }
     //!Get single post
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponseDto> getPostById(@PathVariable Long id){
+    public ResponseEntity<PostResponseDto> getPostById(@PathVariable Long id, @RequestHeader("Authorization") String authHeader){
 
-        PostResponseDto post = postService.getPostById(id);
+        PostResponseDto post = postService.getPostById(id,authHeader);
 
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
     //!Get all posts
     @GetMapping
-    public ResponseEntity<List<PostResponseDto>> getAllPosts(){
+    public ResponseEntity<List<PostResponseDto>> getAllPosts(@RequestHeader("Authorization") String authHeader){
 
-        List<PostResponseDto> posts = postService.getAllPosts();
+        List<PostResponseDto> posts = postService.getAllPosts(authHeader);
 
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
