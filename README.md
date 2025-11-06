@@ -3,7 +3,9 @@
 Backend case kapsamında geliştirdiğim örnek bir sosyal medya RESTful API'sidir.<br>
 Uygulamayı yalnızca API seviyesinde geliştirdim, arayüzü bulunmamaktadır.
 
-⚠️Şu anda aktif olarak projeye çeşitli özellikler & refactoring'e devam etmekteyim. Dilerseniz branch sekmesinden "improvement/refactor-and-features" branchına ulaşarak güncel sürümü görüntüleyebilirsiniz! 
+⚠️ Proje aktif olarak geliştirilmektedir.
+En güncel özellikler ve refactor çalışmaları için:
+👉 improvement/refactor-and-features branch'ine göz atabilirsiniz.
 
 ## KULLANILAN TEKNOLOJİLER VE KÜTÜPHANELER(DEPENDENCIES)
 
