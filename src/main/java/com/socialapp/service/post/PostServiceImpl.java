@@ -4,6 +4,8 @@ import com.socialapp.dto.comment.CommentResponseDto;
 import com.socialapp.dto.post.PostCreateDto;
 import com.socialapp.dto.post.PostResponseDto;
 import com.socialapp.dto.post.PostUpdateDto;
+import com.socialapp.exception.ForbiddenException;
+import com.socialapp.exception.NotFoundException;
 import com.socialapp.model.Comment;
 import com.socialapp.model.Post;
 import com.socialapp.model.User;
@@ -68,7 +70,8 @@ public class PostServiceImpl implements PostService {
     //!Tekli postu döndürme
     @Override public PostResponseDto getPostById(Long id, String authHeader){
         currentUserProvider.getCurrentUser(authHeader);
-        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+//        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+        Post post = postRepository.findById(id).orElseThrow(()-> new NotFoundException("Post not found!"));
         return newDto(post);
     }
     //!Tüm postları listeleme
@@ -84,11 +87,14 @@ public class PostServiceImpl implements PostService {
     public PostResponseDto updatePost(String authHeader, PostUpdateDto postUpdateDto, Long id){
         //!Token üzerinden mevcut kullanıcıyı, daha sonra postu idsine göre buluyorum.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
-        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+//        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+        Post post = postRepository.findById(id).orElseThrow(()-> new NotFoundException("Post not found!"));
 
         //!Yalnızca post sahibi veya admin güncelleme yapabilir.
-        if(!(isOwnThePost(currentUser,post) || currentUserProvider.isAdmin(currentUser)))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Only the post owner or admin can update!");
+        if(!(isOwnThePost(currentUser,post) || currentUserProvider.isAdmin(currentUser))) {
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only the post owner or admin can update!");
+            throw new ForbiddenException("Only the post owner or admin can update!");
+        }
         //!Update edilen alanları post'a set ediyorum.
         if(postUpdateDto.getImageUrl() != null)
             post.setImageUrl(postUpdateDto.getImageUrl());
@@ -103,11 +109,13 @@ public class PostServiceImpl implements PostService {
     public void deletePost(String authHeader, Long id){
         //!Token üzerinden mevcut kullanıcıyı, daha sonra postu idsine göre buluyorum.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
-        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+//        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+        Post post = postRepository.findById(id).orElseThrow(()-> new NotFoundException("Post not found!"));
 
         //!Yalnızca post sahibi veya admin silme yapabilir.
-        if(!(isOwnThePost(currentUser,post) || currentUserProvider.isAdmin(currentUser)))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Only the post owner or admin can update!");
+        if(!(isOwnThePost(currentUser,post) || currentUserProvider.isAdmin(currentUser))){
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Only the post owner or admin can update!");
+            throw new ForbiddenException("Only the post owner or admin can update!");}
 
        postRepository.delete(post);
     }
@@ -115,7 +123,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public void incrementViewCount(Long id, String authHeader){
 
-        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+//        Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
+        Post post = postRepository.findById(id).orElseThrow(()-> new NotFoundException("Post not found!"));
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
 
         if(post.getUser().getId().equals(currentUser.getId()) && post.getViewCount() > 0){

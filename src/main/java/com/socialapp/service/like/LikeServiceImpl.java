@@ -1,5 +1,7 @@
 package com.socialapp.service.like;
 
+import com.socialapp.exception.BadRequestException;
+import com.socialapp.exception.NotFoundException;
 import com.socialapp.model.LikePost;
 import com.socialapp.model.Post;
 import com.socialapp.model.User;
@@ -34,11 +36,13 @@ public class LikeServiceImpl implements LikeService {
     public void likePost(String authHeader,Long postId){
         //!Token üzerinden aktif kullanıcıyı, ardından ilgili postu buluyorum.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
-        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found!"));
+//        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found!"));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("Post not found!"));
 
         //!Eğer post daha önce beğenildiyse tekrardan beğenilmemesini sağlıyorum.
         if(likePostRepository.existsByPostIdAndUserId(postId, currentUser.getId())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Post has already liked!");
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Post has already liked!");
+            throw new BadRequestException("Post has already liked!");
         }
         //! YEni LikePost kaydı oluşturuyorum (user-post relation) ve like countu  yardımcı method ile güncelliyorum.
         likePostRepository.save(LikePost.builder().post(post).user(currentUser).build());
@@ -50,11 +54,14 @@ public class LikeServiceImpl implements LikeService {
     public void unLikePost(String authHeader,Long postId){
         //!Aynı şekilde user ve postu buluyorum.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
-        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found!"));
+//        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found!"));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("Post not found!"));
 
         //!Bu post için yapılan like'ı arıyorum ve beğeniyi kaldırıp tekrardan güncelliyorum.
+//        LikePost like = likePostRepository.findByPostIdAndUserId(postId,currentUser.getId())
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Like not found!"));
         LikePost like = likePostRepository.findByPostIdAndUserId(postId,currentUser.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Like not found!"));
+                .orElseThrow(() -> new NotFoundException("Like not found!"));
 
         likePostRepository.delete(like);
         implementLikeCount(post);

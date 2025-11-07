@@ -3,6 +3,9 @@ package com.socialapp.service.comment;
 import com.socialapp.dto.comment.CommentCreateDto;
 import com.socialapp.dto.comment.CommentResponseDto;
 import com.socialapp.dto.post.PostResponseDto;
+import com.socialapp.exception.ForbiddenException;
+import com.socialapp.exception.NotFoundException;
+import com.socialapp.exception.UnAuthorizedException;
 import com.socialapp.model.Comment;
 import com.socialapp.model.Post;
 import com.socialapp.model.User;
@@ -46,7 +49,8 @@ public class CommentServiceImpl implements CommentService {
     public CommentResponseDto addComment(String authHeader, Long postId, CommentCreateDto commentCreateDto){
         //! Token üzerinden aktif kullanıcıyı ve yoruma ait postu db'den buldum.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
-        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found!"));
+//        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found!"));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new NotFoundException("Post not found!"));
 
         //! Yeni comment nesnesini oluşturdum ve yorumu dtoya dönüştürerek databaseye kaydettim.
         Comment comment = Comment.builder().text(commentCreateDto.getText()).post(post).user(currentUser).build();
@@ -56,8 +60,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentResponseDto> listAllCommentsInPost(Long postId,String authHeader){
         //!Tüm commentleri veritabanından çekiyorum.
-        if (authHeader == null || authHeader.isBlank() || !authHeader.startsWith("Bearer "))
-            throw new RuntimeException("Login required");
+        if (authHeader == null || authHeader.isBlank() || !authHeader.startsWith("Bearer ")){
+//            throw new RuntimeException("Login required");
+            throw new UnAuthorizedException("Login required");
+        }
 
         currentUserProvider.getCurrentUser(authHeader); //giriş doğrulaması (artık usere atamıyorum doğrudan kontrol sağlıyorum)
 
@@ -68,7 +74,8 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(String authHeader, Long commentId){
         //!Token üzerinden mevcut kullanıcıyı, daha sonra silinmek istenen yorumu CommentId ye göre buluyorum.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("Comment not found!"));
+//        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("Comment not found!"));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NotFoundException("Comment not found!"));
 
         //!Silme Kontrolü şu şekilde:
         //! 1- Yorum sahibi kendi yorumunu silebilir.
@@ -80,8 +87,9 @@ public class CommentServiceImpl implements CommentService {
         boolean isAdmin = currentUserProvider.isAdmin(currentUser);
 
         //!Bu durumlar dışında silme işlemi gerçekleştirilemez (bir userin başka bir userin yorumunu silmesi gibi) !
-        if(!(isOwnTheCommentOwner || isPostOwner || isAdmin))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"You are not authorized to delete comment!");
+        if(!(isOwnTheCommentOwner || isPostOwner || isAdmin)){
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"You are not authorized to delete comment!");
+            throw new ForbiddenException("You are not authorized to delete comment!");}
 
         //! Authorization kontrolünden sonra yorumu siliyorum.
         commentRepository.delete(comment);

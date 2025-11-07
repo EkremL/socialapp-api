@@ -1,5 +1,7 @@
 package com.socialapp.service.admin;
 
+import com.socialapp.exception.ForbiddenException;
+import com.socialapp.exception.NotFoundException;
 import com.socialapp.model.User;
 import com.socialapp.repository.TokenRepository;
 import com.socialapp.repository.UserRepository;
@@ -21,11 +23,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteUserByAdmin(Long id, String authHeader){
         //!Target User bilgisi alınır, mevcut değilse hata fırlatılır.
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found!"));
+//        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found!"));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!" + id));
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
 
         if(!currentUserProvider.isAdmin(currentUser))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete anyone!");
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete anyone!");
+            throw new ForbiddenException("You are not authorized to delete anyone!");
 
 
         //!Kullanıcıya ait aktif tokenler ve kullanıcının kendisi silinir.

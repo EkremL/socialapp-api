@@ -3,6 +3,9 @@ package com.socialapp.service.user;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.socialapp.dto.auth.PasswordChangeDto;
 import com.socialapp.dto.auth.UserResponseDto;
+import com.socialapp.exception.BadRequestException;
+import com.socialapp.exception.ForbiddenException;
+import com.socialapp.exception.NotFoundException;
 import com.socialapp.model.User;
 import com.socialapp.repository.TokenRepository;
 import com.socialapp.repository.UserRepository;
@@ -28,12 +31,16 @@ public class UserServiceImpl implements UserService {
         //?Token üzerinden mevcut kullanıcıyı aldım.
         User currentUser = currentUserProvider.getCurrentUser(authHeader);
         //?Hedef Id yi (çağrılmak istenen kişi) databaseden buluyorum.
+//        User targetUser = userRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("User not found!")
+//                );
         User targetUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found!")
-                );
+                .orElseThrow(() -> new NotFoundException("User not found: " + id)); //?GLOBAL EXCEPTION HANDLER
         //! Eğer target admin ise Forbidden ile unauthorized döndürüyorum yani user admini silemiyor.
-        if(targetUser.getRole().name().equals("ADMIN")&& !currentUserProvider.isAdmin(currentUser))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Something wrong!");
+        if(targetUser.getRole().name().equals("ADMIN")&& !currentUserProvider.isAdmin(currentUser)){
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Something wrong!");
+            throw new ForbiddenException("Something wrong!");
+        }
 
         //! User - UserResponseDto dönüşümü yapıyorum.
         return modelMapper.map(targetUser, UserResponseDto.class);
@@ -45,11 +52,15 @@ public class UserServiceImpl implements UserService {
         //!Şifreler birbiriyle eşleşiyor mu manual şekilde kontrol ediyorum ve eşleşmiyorlarsa hata fırlatıyorum.
         BCrypt.Result result = BCrypt.verifyer().verify(pwDto.getCurrentPassword().toCharArray(), user.getPassword());
 
-        if(!result.verified)
-            throw new RuntimeException("Passwords are not matching!");
+        if(!result.verified){
+//            throw new RuntimeException("Passwords are not matching!");
+            throw new BadRequestException("Passwords are not matching!");
+        }
 
-        if(pwDto.getNewPassword().equals(pwDto.getCurrentPassword()))
-            throw new RuntimeException("New password cannot be same with old password!");
+        if(pwDto.getNewPassword().equals(pwDto.getCurrentPassword())) {
+//            throw new RuntimeException("New password cannot be same with old password!");
+            throw new BadRequestException("New password cannot be same with old password!");
+        }
 
         //!Yeni şifreyi hashlayıp dbye kaydediyorum.
         String newHashedPw = BCrypt.withDefaults().hashToString(12,pwDto.getNewPassword().toCharArray());
