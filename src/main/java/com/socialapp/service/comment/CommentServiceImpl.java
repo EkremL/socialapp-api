@@ -67,6 +67,9 @@ public class CommentServiceImpl implements CommentService {
 
         currentUserProvider.getCurrentUser(authHeader); //giriş doğrulaması (artık usere atamıyorum doğrudan kontrol sağlıyorum)
 
+        postRepository.findById(postId)
+                .orElseThrow(() -> new NotFoundException("Post not found!"));
+
         return  commentRepository.findByPostId(postId).stream().map(this::newDto).toList();
     }
     //!Yorum silme işlemi
