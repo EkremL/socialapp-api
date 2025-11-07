@@ -59,7 +59,8 @@ public class CommentServiceImpl implements CommentService {
         if (authHeader == null || authHeader.isBlank() || !authHeader.startsWith("Bearer "))
             throw new RuntimeException("Login required");
 
-        User currentUser = currentUserProvider.getCurrentUser(authHeader);
+        currentUserProvider.getCurrentUser(authHeader); //giriş doğrulaması (artık usere atamıyorum doğrudan kontrol sağlıyorum)
+
         return  commentRepository.findByPostId(postId).stream().map(this::newDto).toList();
     }
     //!Yorum silme işlemi

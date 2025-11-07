@@ -67,14 +67,14 @@ public class PostServiceImpl implements PostService {
     }
     //!Tekli postu döndürme
     @Override public PostResponseDto getPostById(Long id, String authHeader){
-        User currentUser = currentUserProvider.getCurrentUser(authHeader);
+        currentUserProvider.getCurrentUser(authHeader);
         Post post = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found!"));
         return newDto(post);
     }
     //!Tüm postları listeleme
     @Override
     public List<PostResponseDto> getAllPosts(String authHeader){
-        User currentUser = currentUserProvider.getCurrentUser(authHeader);
+        currentUserProvider.getCurrentUser(authHeader);
         return postRepository.findAll().stream().map(this::newDto).toList();
         //.map(post -> newDto(post)) da olurdu
         //collect(Collectors.toList()) de olurdu ama yeni javalarda (16+) toList yeterli
