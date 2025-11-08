@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
+import java.time.LocalDateTime;
+
+@RestControllerAdvice  //!Projedeki tüm controller’larda oluşan hataları tek yerden yakalayıp handle eden global exception manager. (Global exception handler)
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(NotFoundException.class) //!Hangi hatayı yakalayacağını söylüyoruz
     public ResponseEntity<ErrorResponseDTO> handleNotFound(NotFoundException ex, HttpServletRequest req){
 //        ErrorResponseDTO err = new ErrorResponseDTO();
 //        err.setStatus(HttpStatus.NOT_FOUND.value());
@@ -46,6 +48,8 @@ public class GlobalExceptionHandler {
     private ResponseEntity<ErrorResponseDTO> buildErrorResponse(Exception ex, HttpServletRequest req,
                                                                 HttpStatus status, String errorMessage) {
         ErrorResponseDTO err = new ErrorResponseDTO();
+        err.setTimeStamp(LocalDateTime.now());
+        err.setMethod(req.getMethod());
         err.setStatus(status.value());
         err.setError(errorMessage);
         err.setMessage(ex.getMessage());

@@ -1,7 +1,7 @@
 package com.socialapp.exception;
 
 public class UnAuthorizedException extends RuntimeException{
-    public UnAuthorizedException(String message){
+    public UnAuthorizedException(String message){//!401 Unauthorized
         super(message);
     }
 }

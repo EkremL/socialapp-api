@@ -4,7 +4,7 @@ package com.socialapp.exception;
 import org.springframework.http.HttpStatus;
 
 public class NotFoundException extends RuntimeException{
-    public NotFoundException(String message){
+    public NotFoundException(String message){//!404 Not Found
         super(message);
     }
 }

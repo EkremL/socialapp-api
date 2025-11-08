@@ -9,6 +9,8 @@ public class ErrorResponseDTO {
 
     private LocalDateTime timeStamp = LocalDateTime.now();
 
+    private String method;
+
     private int status;
 
     private String error;
