@@ -20,4 +20,8 @@ public interface PostService {
     void deletePost(String authHeader,Long id);
     //! view Count arttırma
     void incrementViewCount(Long id , String authHeader); //?authHeaderi sonradan ekledim tekrar tekrar kendi postuna bakınca view arttırmayı engellemek için
+
+    List<PostResponseDto> getDeletedPosts(String authHeader);
+    PostResponseDto getDeletedPostById(String authHeader, Long id);
+    PostResponseDto restorePost(String authHeader, Long id);
 }

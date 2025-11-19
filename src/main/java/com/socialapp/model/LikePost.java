@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 
 @Entity
@@ -12,8 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@SQLRestriction("is_deleted = false")
 @Table(name = "post_likes", uniqueConstraints = @UniqueConstraint(columnNames = {"postId","userId"} ))
-public class LikePost {
+public class LikePost extends SoftDeletable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

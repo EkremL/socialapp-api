@@ -3,6 +3,7 @@ package com.socialapp.service.auth;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.socialapp.exception.BadRequestException;
 import com.socialapp.exception.NotFoundException;
+import com.socialapp.exception.UnAuthorizedException;
 import com.socialapp.util.CurrentUserProvider;
 import com.socialapp.util.JwtConfig;
 import com.socialapp.dto.auth.LoginRequestDto;
@@ -97,7 +98,7 @@ public class AuthServiceImpl implements AuthService {
     public void logout(String authHeader){
         if(authHeader == null || !authHeader.startsWith(("Bearer "))){
 //            throw new RuntimeException("Token not found in header");
-            throw new NotFoundException("Token not found in header");
+            throw new UnAuthorizedException("Authorization header is missing or invalid!");
         }
 
         String token = authHeader.substring(7);
@@ -105,7 +106,7 @@ public class AuthServiceImpl implements AuthService {
 
         //!Token veritabanında bulunup pasif hale getiriliyor.
 //        Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new RuntimeException("Token not found in database!"));
-        Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new NotFoundException("Token not found in database!"));
+        Token savedToken = tokenRepository.findByToken(token).orElseThrow(() -> new UnAuthorizedException("Token not found or invalid!"));
 
         savedToken.setExpired(true);
         savedToken.setRevoked(true);

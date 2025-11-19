@@ -1,5 +1,6 @@
 package com.socialapp.controller;
 
+import com.socialapp.dto.auth.UserDto;
 import com.socialapp.dto.comment.CommentCreateDto;
 import com.socialapp.dto.comment.CommentResponseDto;
 import com.socialapp.service.comment.CommentService;
@@ -36,5 +37,24 @@ public class CommentController {
     public ResponseEntity<String> deleteComment(@RequestHeader("Authorization")String authHeader,@PathVariable Long id){
         commentService.deleteComment(authHeader,id);
         return ResponseEntity.status(HttpStatus.OK).body("Comment successfully deleted!");
+    }
+
+    //!Get deleted comments (only for admins after soft delete)
+    @GetMapping("/comments/deleted")
+    public List<CommentResponseDto> getDeletedComments(@RequestHeader("Authorization") String authHeader){
+        return commentService.getDeletedComments(authHeader);
+    }
+    //!Get deleted comment by id (only for admins after soft delete)
+    @GetMapping("/comments/deleted/{id}")
+    public CommentResponseDto getDeletedCommentById(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id){
+        return commentService.getDeletedCommentById(authHeader, id);
+    }
+    //!Restore deleted comment by id (only for admins after soft delete)
+    @PutMapping("/comments/{id}/restore")
+    public CommentResponseDto restoreComment(@RequestHeader("Authorization") String authHeader,
+                               @PathVariable Long id){
+        return commentService.restoreComment(authHeader, id);
     }
 }

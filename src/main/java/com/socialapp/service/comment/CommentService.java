@@ -14,4 +14,8 @@ public interface CommentService {
 
     //!Yorum silme işlemi (authHeader sayesinde korumalı endpoint haline geldi yani yorum sahibi, post sahibi veya admin tarafından yapılabilir.)
     void deleteComment(String authHeader, Long commentId);
+
+    List<CommentResponseDto> getDeletedComments(String authHeader);
+    CommentResponseDto getDeletedCommentById(String authHeader, Long commentId);
+    CommentResponseDto restoreComment(String authHeader, Long commentId);
 }

@@ -1,7 +1,9 @@
 package com.socialapp.controller;
 
 import com.socialapp.dto.auth.PasswordChangeDto;
+import com.socialapp.dto.auth.UserDto;
 import com.socialapp.dto.auth.UserResponseDto;
+import com.socialapp.dto.post.PostResponseDto;
 import com.socialapp.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -36,6 +40,25 @@ public class UserController {
     public ResponseEntity<String> deleteMyAccount(@RequestHeader("Authorization") String authHeader){
         userService.deleteMyAccount(authHeader);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Account has deleted successfully!");
+    }
+
+    //!Get deleted users (only for admins after soft delete)
+    @GetMapping("/deleted")
+    public List<UserDto> getDeletedUsers(@RequestHeader("Authorization") String authHeader){
+        return userService.getDeletedUsers(authHeader);
+    }
+    //!Get deleted user by id (only for admins after soft delete)
+    @GetMapping("/deleted/{id}")
+    public UserDto getDeletedUserById(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id){
+        return userService.getDeletedUserById(authHeader, id);
+    }
+    //!Restore deleted user by id (only for admins after soft delete)
+    @PutMapping("/{id}/restore")
+    public UserDto restoreUser(@RequestHeader("Authorization") String authHeader,
+                                       @PathVariable Long id){
+        return userService.restoreUser(authHeader, id);
     }
 
 }

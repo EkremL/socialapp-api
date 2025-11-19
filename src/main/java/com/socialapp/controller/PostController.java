@@ -69,4 +69,22 @@ public class PostController {
 
         return ResponseEntity.ok().build();
     }
+    //!Get deleted posts (only for admins after soft delete)
+    @GetMapping("/deleted")
+    public List<PostResponseDto> getDeletedPosts(@RequestHeader("Authorization") String authHeader){
+        return postService.getDeletedPosts(authHeader);
+    }
+    //!Get deleted post by id (only for admins after soft delete)
+    @GetMapping("/deleted/{id}")
+    public PostResponseDto getDeletedPostById(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id){
+        return postService.getDeletedPostById(authHeader, id);
+    }
+    //!Restore deleted post by id (only for admins after soft delete)
+    @PutMapping("/{id}/restore")
+    public PostResponseDto restorePost(@RequestHeader("Authorization") String authHeader,
+                                       @PathVariable Long id){
+        return postService.restorePost(authHeader, id);
+    }
 }

@@ -3,10 +3,12 @@ package com.socialapp.service.comment;
 import com.socialapp.dto.comment.CommentCreateDto;
 import com.socialapp.dto.comment.CommentResponseDto;
 import com.socialapp.dto.post.PostResponseDto;
+import com.socialapp.exception.BadRequestException;
 import com.socialapp.exception.ForbiddenException;
 import com.socialapp.exception.NotFoundException;
 import com.socialapp.exception.UnAuthorizedException;
 import com.socialapp.model.Comment;
+import com.socialapp.model.DeletedReason;
 import com.socialapp.model.Post;
 import com.socialapp.model.User;
 import com.socialapp.repository.CommentRepository;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,10 +97,98 @@ public class CommentServiceImpl implements CommentService {
 //            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"You are not authorized to delete comment!");
             throw new ForbiddenException("You are not authorized to delete comment!");}
 
-        //! Authorization kontrolünden sonra yorumu siliyorum.
-        commentRepository.delete(comment);
+        //* DELETE REASON
+        if (isOwnTheCommentOwner) {
+            // User kendi yorumunu siliyor VEYA post sahibi kendi postundaki yorumları siliyor
+            comment.setDeletedReason(DeletedReason.USER_SELF_DELETE);
+        }
+        else if(isPostOwner){
+            comment.setDeletedReason(DeletedReason.PARENT_POST_DELETE);
+        }
+        else{
+            // Admin siliyor
+            comment.setDeletedReason(DeletedReason.ADMIN_DELETE);
+        }
+
+//        //! Authorization kontrolünden sonra yorumu siliyorum.
+//        commentRepository.delete(comment); (!ESKİ (SOFT DELETE ÖNCESİ)
+        //!SOFT DELETE
+        comment.setDeleted(true);
+        comment.setDeletedAt(LocalDateTime.now());
+        comment.setDeletedBy(currentUser.getId());
+        commentRepository.save(comment);
     }
+    //!(Only for admins) Silinen tüm commentleri getirir
+    @Override
+    public List<CommentResponseDto> getDeletedComments(String authHeader) {
+        User currentUser = currentUserProvider.getCurrentUser(authHeader);
 
+        if (!currentUserProvider.isAdmin(currentUser)) {
+            throw new ForbiddenException("Only admins can view deleted comments!");
+        }
 
+        return commentRepository.findDeletedComments()
+                .stream()
+                .map(c -> CommentResponseDto.builder()
+                        .id(c.getId())
+                        .text(c.getText())
+                        .userId(c.getUser() != null ? c.getUser().getId() : null)
+                        .username(c.getUser() != null ? c.getUser().getUsername() : null)
+                        .postId(c.getPost() != null ? c.getPost().getId() : null) // sadece id
+                        .createdAt(c.getCreatedAt())
+                        .build()
+                )
+                .toList();
+    }
+    //! (Only for admins)Silinen commenti idye göre getir
+    @Override
+    public CommentResponseDto getDeletedCommentById(String authHeader, Long commentId) {
+        User currentUser = currentUserProvider.getCurrentUser(authHeader);
 
+        if (!currentUserProvider.isAdmin(currentUser)) {
+            throw new ForbiddenException("Only admins can view deleted comment!");
+        }
+
+        Comment comment = commentRepository.findEvenIfDeleted(commentId)
+                .orElseThrow(() -> new NotFoundException("Comment not found!"));
+
+        if (!comment.isDeleted()) {
+            throw new BadRequestException("This comment is not deleted.");
+        }
+
+        return newDto(comment);
+    }
+    //! (Only for admins)Commentleri Restore etme işlemi (silinmiş olanlar dahil)
+    @Override
+    public CommentResponseDto restoreComment(String authHeader, Long commentId) {
+        User currentUser = currentUserProvider.getCurrentUser(authHeader);
+
+        if (!currentUserProvider.isAdmin(currentUser)) {
+            throw new ForbiddenException("Only admins can restore comments!");
+        }
+
+        Comment comment = commentRepository.findEvenIfDeleted(commentId)
+                .orElseThrow(() -> new NotFoundException("Comment not found!"));
+
+        if (!comment.isDeleted()) {
+            throw new BadRequestException("Comment is not deleted.");
+        }
+        // Parent User silikse restore edilemez
+        if (comment.getUser() != null && comment.getUser().isDeleted()) {
+            throw new BadRequestException("User is deleted. Restore the user first.");
+        }
+
+        // Parent Post silikse hata
+        if (comment.getPost().isDeleted()) {
+            throw new BadRequestException("Post is deleted. Restore the post first.");
+        }
+
+            comment.setDeleted(false);
+            comment.setDeletedAt(null);
+            comment.setDeletedBy(null);
+            comment.setDeletedReason(null);
+            commentRepository.save(comment);
+
+            return newDto(comment);
+    }
 }
