@@ -61,4 +61,6 @@ public class User extends SoftDeletable{
     //? Post silinince like'lar da silinir. Comment ile şimdilik ilişkisi yok.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikePost> likes = new ArrayList<>();
+
+
 }

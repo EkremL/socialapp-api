@@ -29,4 +29,7 @@ public interface PostRepository  extends JpaRepository<Post,Long> {
     // NEDEN? User silinince/restore edilince, o user’a ait TÜM postları topluca işlemek için.
     @Query(value = "SELECT * FROM post WHERE user_id = :userId", nativeQuery = true)
     List<Post> findEvenIfDeletedByUserId(@Param("userId") Long userId);
+
+    List<Post> findAllByUserId(Long userId);
 }
+

@@ -11,14 +11,19 @@ import com.socialapp.exception.UnAuthorizedException;
 import com.socialapp.model.*;
 import com.socialapp.repository.*;
 import com.socialapp.util.CurrentUserProvider;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final CurrentUserProvider currentUserProvider;
     private final ModelMapper modelMapper;
     private final TokenRepository tokenRepository;
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     //!Id ye göre kullanıcı bilgilerini döndürme
     @Override
@@ -217,6 +223,34 @@ public class UserServiceImpl implements UserService {
         });
         likePostRepository.saveAll(likes);
 
+        return modelMapper.map(user, UserDto.class);
+    }
+    //!Alttaki method test amacıyla yazılmıştır!
+    //!BU METHODU TRANSACTIONAL AND LOG testi için yazdım amacım pekiştirmek oldu.
+    @Transactional
+    public UserDto deleteUser(Long userId){
+        log.info("Deleting user with id {} ", userId);
+
+        User user = userRepository.findById(userId).orElse(null);
+        if(user == null){
+            log.warn("User not found with id {}!", userId);
+            throw  new NotFoundException("User not found!");
+        }
+        user.setDeleted(true);
+        user.setDeletedAt(LocalDateTime.now());
+        user.setDeletedBy(user.getId());
+        log.info("User {} soft deleted", userId);
+        userRepository.save(user);
+
+        List<Post> posts = postRepository.findAllByUserId(userId);
+        log.info("Found {} posts for user {}", posts.size(), userId);
+        posts.forEach(post -> {
+            post.setDeleted(true);
+            post.setDeletedAt(LocalDateTime.now());
+            post.setDeletedBy(user.getId());
+        });
+        postRepository.saveAll(posts);
+        log.info("Soft deleted {} posts for user {}", posts.size(), userId);
         return modelMapper.map(user, UserDto.class);
     }
 }
